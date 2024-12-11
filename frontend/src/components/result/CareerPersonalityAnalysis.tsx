@@ -55,7 +55,7 @@ export function CareerPersonalityAnalysis({ analysis }: Props) {
             <div className="flex flex-col items-center justify-center p-8 h-[400px]">
               <div className="relative w-full h-full">
                 <img
-                  src={`${config.API_BASE_URL}/api/survey/icon/${analysis.iconId}`}
+                  src={`${config.API_BASE_URL}/static/icon/${analysis.iconId}.png`}  // Add .png extension
                   alt="Character Icon"
                   className="w-full h-full object-contain"
                   onError={(e) => {

@@ -1,12 +1,10 @@
-import type { Question, SurveyResponse, AnalysisResult } from '../types/survey';
+import type { AnalysisResult } from '../types/survey';
 
-import { config } from '../config';
-
-const API_BASE_URL = config.API_BASE_URL;
+const API_BASE_URL = '/api';
 
 export async function fetchQuestions() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/survey/questions`);
+        const response = await fetch(`${API_BASE_URL}/survey/questions`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -18,7 +16,7 @@ export async function fetchQuestions() {
     }
 }
 
-export async function submitSurveyAndGetAnalysis(answers: string[]) {
+export async function submitSurveyAndGetAnalysis(answers: string[]): Promise<AnalysisResult> {
     try {
         console.log('Submitting answers:', answers);
         const response = await fetch(`${API_BASE_URL}/survey/submit`, {

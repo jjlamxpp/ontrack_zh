@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchQuestions, submitSurveyAndGetAnalysis } from '../services/api';
 import type { Question } from '../types/survey';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { config } from '../config';
 
 export function SurveyPage() {
   const navigate = useNavigate();
@@ -64,36 +61,31 @@ export function SurveyPage() {
 
   const handleSubmit = async () => {
     try {
-      setLoading(true); // Add loading state
       console.log('Starting submission...');
       const allQuestionsAnswered = answers.every(answer => answer !== '');
       if (!allQuestionsAnswered) {
-        setError('請回答所有問題後再提交');
+        setError('Please answer all questions before submitting');
         return;
       }
 
       const result = await submitSurveyAndGetAnalysis(answers);
       console.log('Analysis result:', result);
       
+      // Save the result in localStorage before navigating
       localStorage.setItem('analysisResult', JSON.stringify(result));
       localStorage.removeItem('surveyAnswers');
       
       navigate('/result');
     } catch (err) {
       console.error('Submission error:', err);
-      setError('提交失敗，請稍後再試或聯繫支援');
-    } finally {
-      setLoading(false);
+      setError(err instanceof Error ? err.message : 'Failed to submit survey');
     }
   };
 
   if (loading) {
     return (
       <div className="min-h-screen w-full bg-[#1B2541] text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-xl mb-4">正在加載中...</div>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-        </div>
+        <div className="text-xl">正在加載問題...</div>
       </div>
     );
   }

@@ -1,3 +1,6 @@
+// Add Language type if you need it
+export type Language = 'en' | 'zh';
+
 // Define types matching your backend schemas
 export interface Question {
   id: number;
@@ -20,15 +23,6 @@ export interface PersonalityAnalysis {
   riasecScores: {
     [key: string]: number;
   };
-}
-
-export interface JupasInfo {
-  subject: string;
-  jupasCode: string;
-  school: string;
-  averageScore: string;
-  requirements?: string[];
-  careerProspects?: string;
 }
 
 export interface IndustryRecommendation {

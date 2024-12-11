@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+/dist
+/build
+__pycache__/
+*.py[cod]
+*.class
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+env/
+.env/
+
+# Static files
+static/

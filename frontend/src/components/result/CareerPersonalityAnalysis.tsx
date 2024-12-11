@@ -2,14 +2,13 @@ import { useState } from "react"
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts"
 import { Card, CardContent } from "@/components/ui/card"
 import type { PersonalityAnalysis } from '../../types/survey'
-import { config } from '../../config'
 
 interface Props {
   analysis: PersonalityAnalysis;
 }
 
 export function CareerPersonalityAnalysis({ analysis }: Props) {
-  const [imageError, setImageError] = useState(false);
+  console.log('CareerPersonalityAnalysis received:', analysis);
 
   if (!analysis) {
     console.log('No analysis data provided');
@@ -50,22 +49,23 @@ export function CareerPersonalityAnalysis({ analysis }: Props) {
 
   return (
     <div className="space-y-6">
-      {/* Icon and Radar Chart Card */}
       <Card className="bg-white text-black p-6">
         <CardContent className="p-0">
           <div className="grid md:grid-cols-2">
-            {/* Left side: Character Icon */}
             <div className="flex flex-col items-center justify-center p-8 h-[400px]">
               <div className="relative w-full h-full">
                 <img
-                  src={`http://localhost:8000/api/survey/icon/${analysis.iconId}`}
+                  src={`/api/survey/icon/${analysis.iconId}`}
                   alt="Character Icon"
                   className="w-full h-full object-contain"
+                  onError={(e) => {
+                    console.error('Failed to load character icon');
+                    e.currentTarget.src = '/static/icon/default.png';
+                  }}
                 />
               </div>
             </div>
             
-            {/* Right side: Radar Chart */}
             <div className="h-[400px] p-8">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>

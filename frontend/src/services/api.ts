@@ -1,11 +1,14 @@
 import type { AnalysisResult } from '../types/survey';
+import { config } from '../config';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = `${config.API_BASE_URL}/api`;
 
 export async function fetchQuestions() {
     try {
         const response = await fetch(`${API_BASE_URL}/survey/questions`);
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
@@ -28,6 +31,8 @@ export async function submitSurveyAndGetAnalysis(answers: string[]): Promise<Ana
         });
         
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         

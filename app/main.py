@@ -23,16 +23,14 @@ school_icon_dir.mkdir(parents=True, exist_ok=True)
 # Mount static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Configure CORS
-allowed_origins = [
-    "http://localhost:5173",  # Local development
-    "https://ontrack-zh-front.onrender.com",  # Production frontend URL
-    # Add any other allowed origins here
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=[
+        "https://ontrack-zh.onrender.com",  # Your frontend URL
+        "https://ontrack-zh-front.onrender.com",  # Your frontend domain
+        "http://localhost:5173"  # For local development
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

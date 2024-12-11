@@ -2,14 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { WelcomePage } from './components/WelcomePage';
 import { SurveyPage } from './components/SurveyPage';
 import { CareerAnalysis } from './components/result/CareerAnalysis';
-import { Suspense } from 'react';
-import { config } from './config';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Default route redirects to welcome page */}
         <Route path="/" element={<WelcomePage />} />
         <Route path="/survey/:questionId" element={<SurveyPage />} />
         <Route 
@@ -20,18 +17,25 @@ function App() {
             </RequireAnalysis>
           } 
         />
-        {/* Catch all other routes and redirect to welcome */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
 }
 
-// Helper component to check if analysis data exists
 function RequireAnalysis({ children }: { children: React.ReactNode }) {
   const result = localStorage.getItem('analysisResult');
   
-  if (!result) {
+  try {
+    if (!result) {
+      throw new Error('No analysis result found');
+    }
+    const parsedResult = JSON.parse(result);
+    if (!parsedResult || !parsedResult.personality || !parsedResult.industries) {
+      throw new Error('Invalid analysis result format');
+    }
+  } catch (error) {
+    console.error('Error in RequireAnalysis:', error);
     return <Navigate to="/" replace />;
   }
 

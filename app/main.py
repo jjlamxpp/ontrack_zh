@@ -5,6 +5,10 @@ from fastapi.responses import RedirectResponse
 from pathlib import Path
 import shutil
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI()
 
@@ -21,9 +25,15 @@ school_icon_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Configure CORS
+allowed_origins = [
+    "http://localhost:5173",  # Local development
+    "https://ontrack-zh-front.onrender.com",  # Production frontend URL
+    # Add any other allowed origins here
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Your frontend URL
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,7 +42,6 @@ app.add_middleware(
 # Add root route
 @app.get("/")
 async def root():
-    # Redirect to your frontend URL or return API information
     return {
         "message": "Welcome to OnTrack API",
         "version": "2.0",
@@ -54,4 +63,5 @@ app.include_router(
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

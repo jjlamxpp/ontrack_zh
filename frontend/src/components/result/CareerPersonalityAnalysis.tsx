@@ -70,7 +70,15 @@ export function CareerPersonalityAnalysis({ analysis }: Props) {
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
                   <PolarGrid />
-                  <PolarAngleAxis dataKey="subject" />
+                  <PolarAngleAxis 
+                    dataKey="subject" 
+                    tick={{ fontSize: 12 }}  // Reduce font size
+                    tickSize={15}           // Adjust tick line length
+                    style={{
+                      fontSize: '12px',     // Additional font size control
+                      fontWeight: 'normal'
+                    }}
+                  />
                   <PolarRadiusAxis angle={30} domain={[0, 1]} />
                   <Radar
                     name="RIASEC"

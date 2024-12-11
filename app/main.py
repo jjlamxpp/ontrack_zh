@@ -53,7 +53,7 @@ async def root():
     }
 
 # Include your routers
-from routers import survey
+from app.routers import survey
 app.include_router(
     survey.router,
     prefix="/api/survey",

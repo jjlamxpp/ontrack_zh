@@ -1,10 +1,12 @@
 import type { Question, SurveyResponse, AnalysisResult } from '../types/survey';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+import { config } from '../config';
+
+const API_BASE_URL = config.API_BASE_URL;
 
 export async function fetchQuestions() {
     try {
-        const response = await fetch(`${API_BASE_URL}/survey/questions`);
+        const response = await fetch(`${API_BASE_URL}/api/survey/questions`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

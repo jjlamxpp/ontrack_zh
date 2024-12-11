@@ -1,12 +1,10 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button } from "@/components/ui/button"
 import { CareerPersonalityAnalysis } from "./CareerPersonalityAnalysis"
 import { RecommendedIndustry } from "./RecommendedIndustry"
 import type { AnalysisResult } from '../../types/survey'
-import { config } from '../../config';
 
 export function CareerAnalysis() {
   const navigate = useNavigate();
@@ -22,9 +20,7 @@ export function CareerAnalysis() {
 
     try {
       const parsedResult = JSON.parse(savedResult);
-      if (!parsedResult || !parsedResult.personality || !parsedResult.industries) {
-        throw new Error('Invalid analysis result format');
-      }
+      console.log('Parsed result:', parsedResult);
       setResult(parsedResult);
     } catch (error) {
       console.error('Error parsing analysis result:', error);
@@ -50,10 +46,7 @@ export function CareerAnalysis() {
   if (!result) {
     return (
       <div className="min-h-screen w-full bg-[#1B2541] text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-xl mb-4">正在加載結果...</div>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
-        </div>
+        <div className="text-xl">正在加載結果...</div>
       </div>
     );
   }

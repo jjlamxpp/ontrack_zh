@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { WelcomePage } from './components/WelcomePage';
 import { SurveyPage } from './components/SurveyPage';
 import { CareerAnalysis } from './components/result/CareerAnalysis';
+import { Suspense } from 'react';
+import { config } from './config';
 
 function App() {
   return (

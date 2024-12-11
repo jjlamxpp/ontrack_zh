@@ -133,7 +133,7 @@ export function RecommendedIndustry({ industries = [] }: Props) {
                   <div className="flex items-center justify-center h-full">
                     <div className={`relative ${getSchoolLogoStyles(parseEducation(selectedIndustry.education || '').school)}`}>
                       <img 
-                        src={`${config.API_BASE_URL}/api/survey/school-icon/${parseEducation(selectedIndustry.education || '').school}`}
+                        src={`${config.API_BASE_URL}/static/school_icon/${parseEducation(selectedIndustry.education || '').school}.png`}  // Add .png extension
                         alt={`${parseEducation(selectedIndustry.education || '').school} Logo`}
                         className="w-full h-full object-contain"
                         onError={(e) => {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import type { IndustryRecommendation } from '../../types/survey';
+import { config } from '../../config';
 
 interface Props {
   industries?: IndustryRecommendation[];
@@ -132,12 +133,12 @@ export function RecommendedIndustry({ industries = [] }: Props) {
                   <div className="flex items-center justify-center h-full">
                     <div className={`relative ${getSchoolLogoStyles(parseEducation(selectedIndustry.education || '').school)}`}>
                       <img 
-                        src={`http://localhost:8000/api/survey/school-icon/${parseEducation(selectedIndustry.education || '').school}`}
+                        src={`${config.API_BASE_URL}/api/survey/school-icon/${parseEducation(selectedIndustry.education || '').school}`}
                         alt={`${parseEducation(selectedIndustry.education || '').school} Logo`}
                         className="w-full h-full object-contain"
                         onError={(e) => {
-                          console.error('Failed to load school logo:', parseEducation(selectedIndustry.education || '').school);
-                          e.currentTarget.src = '/static/school_icon/default.png';
+                          console.error('Failed to load school logo');
+                          e.currentTarget.src = `${config.API_BASE_URL}/static/school_icon/default.png`;
                         }}
                       />
                     </div>
